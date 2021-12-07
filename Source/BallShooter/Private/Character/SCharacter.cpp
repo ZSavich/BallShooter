@@ -9,6 +9,8 @@
 // Sets default values
 ASCharacter::ASCharacter()
 {
+    GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    
     WeaponComp = CreateDefaultSubobject<USWeaponComponent>(TEXT("WeaponComponent"));
     
     CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("FPPCamera"));

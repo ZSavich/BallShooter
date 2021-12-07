@@ -65,5 +65,6 @@ void ASWeapon::Fire()
     SpawnParams.Owner = this;
     SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-    GetWorld()->SpawnActor<ASProjectile>(ProjectileClass, GetSpawnTransform(), SpawnParams);
+    const auto Projectile = GetWorld()->SpawnActor<ASProjectile>(ProjectileClass, GetSpawnTransform(), SpawnParams);
+    
 }

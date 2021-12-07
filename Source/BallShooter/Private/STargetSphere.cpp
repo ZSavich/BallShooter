@@ -9,6 +9,7 @@
 // Sets default values
 ASTargetSphere::ASTargetSphere()
 {
+    // Create and Setup Target Sphere Mesh
     MeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
     MeshComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     MeshComp->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -27,11 +28,15 @@ void ASTargetSphere::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrim
 {
     Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
 
+    // Handle only Projectile Actors
     if(!Other->IsA<ASProjectile>()) return;
-    
+
+    // Find Game Mode Class of the Level
     const auto GM = GetWorld()->GetAuthGameMode<ASGameMode>();
     if(!ensure(GM)) return;
 
+    // Calls the assigns of OnTargetKilled delegate
     GM->OnTargetKilled.Broadcast(this);
+    // Immediately to destroy this actor
     Destroy();
 }

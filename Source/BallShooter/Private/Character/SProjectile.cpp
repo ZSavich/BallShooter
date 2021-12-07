@@ -11,9 +11,7 @@ ASProjectile::ASProjectile()
 {
     // Create and set up default properties for the Sphere Collision
     SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollision"));
-    SphereCollision->IgnoreActorWhenMoving(GetInstigator<AActor>(), true);
-    SphereCollision->IgnoreActorWhenMoving(GetOwner(), true);
-    SphereCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+    SphereCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     SphereCollision->SetCollisionResponseToAllChannels(ECR_Block);
     SetRootComponent(SphereCollision);
 
@@ -34,6 +32,10 @@ void ASProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
+    
+    SphereCollision->IgnoreActorWhenMoving(GetInstigator(), true);
+    SphereCollision->IgnoreActorWhenMoving(GetOwner(), true);
+    
     // Destroy actor in life span time
     SetLifeSpan(LifeSpan);
 }

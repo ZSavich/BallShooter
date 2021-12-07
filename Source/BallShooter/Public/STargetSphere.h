@@ -12,6 +12,7 @@ class BALLSHOOTER_API ASTargetSphere : public AActor
 	GENERATED_BODY()
 
 protected:
+    /** Spawn Static Mesh Component for the Target Sphere **/
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="TargetSphere")
     UStaticMeshComponent* MeshComp;
     
@@ -22,6 +23,8 @@ public:
 protected:
 	/** Called when the game starts or when spawned **/
 	virtual void BeginPlay() override;
+
+    /** Called when the Target Sphere hit something **/
     virtual void NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;
 
 };
