@@ -14,7 +14,8 @@ public class BallShooter : ModuleRules
 			"CoreUObject", 
 			"Engine", 
 			"InputCore", 
-			"HeadMountedDisplay"
+			"HeadMountedDisplay",
+			"NavigationSystem",
 		});
 		
 		PublicIncludePaths.AddRange(new string[]

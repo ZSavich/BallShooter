@@ -15,7 +15,6 @@ ASProjectile::ASProjectile()
     SphereCollision->IgnoreActorWhenMoving(GetOwner(), true);
     SphereCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     SphereCollision->SetCollisionResponseToAllChannels(ECR_Block);
-    SphereCollision->SetSimulatePhysics(true);
     SetRootComponent(SphereCollision);
 
     // Create and set up default properties for the Projectile's Mesh
@@ -50,6 +49,5 @@ void ASProjectile::PostInitializeComponents()
 void ASProjectile::OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
     FVector NormalImpulse, const FHitResult& Hit)
 {
-    DrawDebugSphere(GetWorld(), Hit.ImpactPoint, 16.f, 32.f, FColor::Green, false, 5.f, 0.f, 1.f);
     Destroy();
 }
