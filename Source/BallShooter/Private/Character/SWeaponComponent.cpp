@@ -8,9 +8,11 @@
 // Sets default values for this component's properties
 USWeaponComponent::USWeaponComponent()
 {
+    // Set default name for hand socket in character mesh
     HandSocketName = "S_Hand_01";
 }
 
+// Called when player press input "Fire"
 void USWeaponComponent::Fire()
 {
     if(!ensure(WeaponInstance)) return;
@@ -18,15 +20,17 @@ void USWeaponComponent::Fire()
 }
 
 
-// Called when the game starts
+// Calls when the game starts
 void USWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
     if(!ensureMsgf(WeaponClass, TEXT("Weapon Component doesn't have any weapons class."))) return;
 
+    // Spawns the Weapon Instance when game stars
     SpawnWeapon();
 }
 
+// Spawns the weapon instance for character class
 void USWeaponComponent::SpawnWeapon()
 {
     const auto Owner = GetOwner<ACharacter>();
@@ -38,9 +42,11 @@ void USWeaponComponent::SpawnWeapon()
     
     WeaponInstance = GetWorld()->SpawnActor<ASWeapon>(WeaponClass, SpawnParams);
 
+    // Attack the weapon to the hand socket
     AttachWeaponToHand(Owner);
 }
 
+// Calls in order to attach the weapon to hand socket in the character mesh
 void USWeaponComponent::AttachWeaponToHand(const ACharacter* Owner) const
 {
     if(!WeaponInstance) return;

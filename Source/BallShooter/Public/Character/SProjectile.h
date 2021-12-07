@@ -38,12 +38,6 @@ protected:
 	virtual void BeginPlay() override;
     virtual void PostInitializeComponents() override;
 
-public:
-    FORCEINLINE void SetShotDirection(const FVector& Direction) {ShotDirection = Direction;}
-
-protected:
     UFUNCTION()
     void OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-    
-
 };

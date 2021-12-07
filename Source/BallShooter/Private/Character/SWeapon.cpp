@@ -11,6 +11,7 @@
 // Sets default values
 ASWeapon::ASWeapon()
 {
+    // Set up default properties for the Weapon's Mesh
     WeaponMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
     WeaponMeshComp->bCastDynamicShadow = false;
     WeaponMeshComp->CastShadow = false;
@@ -27,6 +28,7 @@ void ASWeapon::BeginPlay()
     if(!ensureMsgf(ProjectileClass, TEXT("Weapon doesn't have Projectile Class."))) return;
 }
 
+// Find position for a projectile direction
 FTransform ASWeapon::GetSpawnTransform() const
 {
     const auto OwnerPawn = GetInstigator();
@@ -40,16 +42,20 @@ FTransform ASWeapon::GetSpawnTransform() const
     
     auto EndPointLocation = ViewLocation + (ViewRotation.Vector() * 2000.f);
 
+    // Creates a Line Trace in order to find blocking objects
     FHitResult HitResult;
     GetWorld()->LineTraceSingleByChannel(HitResult, ViewLocation, EndPointLocation, ECC_Visibility);
 
+    // If there's blocking object, get it's location
     EndPointLocation = HitResult.bBlockingHit ? HitResult.ImpactPoint : EndPointLocation;
-    
+
+    // Find Spawn Rotation from the muzzle to the end point 
     const auto SpawnRotation = FRotationMatrix::MakeFromX(EndPointLocation - MuzzleLocation).Rotator();
     
     return FTransform(SpawnRotation, MuzzleLocation);
 }
 
+// Calls from WeaponComponent in order to spawn a projectile
 void ASWeapon::Fire()
 {
     if(!ProjectileClass) return;
