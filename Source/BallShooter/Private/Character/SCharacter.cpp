@@ -1,14 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Character/SCharacter.h"
-
+#include "SCharacter.h"
+#include "SWeaponComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
 ASCharacter::ASCharacter()
 {
+    WeaponComp = CreateDefaultSubobject<USWeaponComponent>(TEXT("WeaponComponent"));
+    
     CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("FPPCamera"));
     CameraComp->SetupAttachment(GetCapsuleComponent());
     CameraComp->bUsePawnControlRotation = true;
@@ -37,7 +39,7 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
     PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
     // Firing input
-    //PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASCharacter::OnFire);
+    PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComp, &USWeaponComponent::Fire);
 
     // Movement inputs
     PlayerInputComponent->BindAxis("MoveForward", this, &ASCharacter::MoveForward);

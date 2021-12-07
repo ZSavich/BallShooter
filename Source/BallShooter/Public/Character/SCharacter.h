@@ -7,6 +7,7 @@
 #include "SCharacter.generated.h"
 
 class UCameraComponent;
+class USWeaponComponent;
 
 UCLASS()
 class BALLSHOOTER_API ASCharacter : public ACharacter
@@ -17,12 +18,15 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera")
     UCameraComponent* CameraComp;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Components")
+    USWeaponComponent* WeaponComp;
+
 public:
 	/** Sets default properties for SCharacter **/
 	ASCharacter();
 
 protected:
-	// Called when the game starts or when spawned
+	/** Called when the game starts or when spawned **/
 	virtual void BeginPlay() override;
 
     /** Forward/Backward moving **/
