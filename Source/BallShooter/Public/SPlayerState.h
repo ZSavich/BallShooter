@@ -12,9 +12,14 @@ class BALLSHOOTER_API ASPlayerState : public APlayerState
 {
 	GENERATED_BODY()
 
-    int32 CountOfKills;
+    // Score of killed targets
+    int32 KillsScore = 0;
 
 public:
+    // Getter for privat properties 
     UFUNCTION(BlueprintCallable)
-    int32 GetCountOfKills() const {return CountOfKills;}
+    int32 GetKillsScore() const {return KillsScore;}
+
+    // Increase KillsScore by one
+    FORCEINLINE void IncreaseKillsScore() {++KillsScore;}
 };

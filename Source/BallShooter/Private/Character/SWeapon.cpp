@@ -66,5 +66,10 @@ void ASWeapon::Fire()
     SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
     const auto Projectile = GetWorld()->SpawnActor<ASProjectile>(ProjectileClass, GetSpawnTransform(), SpawnParams);
-    
+
+    // Spawn Particle Effect if this sets
+    if(MuzzleEffect)
+    {
+        UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, WeaponMeshComp, MuzzleSocketName, FVector(ForceInit) , FRotator::ZeroRotator, FVector(0.05f));
+    }
 }

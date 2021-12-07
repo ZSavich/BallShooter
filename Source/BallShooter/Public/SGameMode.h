@@ -46,10 +46,10 @@ protected:
     //~=============================================================================
     //  Properties about a Wave Radius
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Wave| Radius", meta = (ClampMin=1000, ClampMax=4000))
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Wave | Radius", meta = (ClampMin=1000, ClampMax=4000))
     int32 InitialSpawnRadius;
     
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Wave| Radius", meta = (ClampMin=100, ClampMax=2000));
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Wave | Radius", meta = (ClampMin=100, ClampMax=2000));
     int32 KillsCountingRadius;
 
     //~=============================================================================
@@ -64,10 +64,10 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Wave | Targets", meta = (ClampMin=10, ClampMax=250))
     int32 TargetsDistance;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Wave| Targets", meta = (ClampMin=20.f, ClampMax=100.f))
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Wave | Targets", meta = (ClampMin=20.f, ClampMax=100.f))
     float SpawnHeight;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Wave| Targets", meta = (ClampMin=0.4f, ClampMax=10.f))
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Wave | Targets", meta = (ClampMin=0.4f, ClampMax=10.f))
     float MinTargetSize;
 
     //~=============================================================================
@@ -86,6 +86,10 @@ public:
     /** Constructor with default properties **/
     ASGameMode();
 
+    /** Delegates **/
+    FOnTargetKilled OnTargetKilled;
+    FOnWaveFinished OnWaveFinished;
+
     /** Called when the Level Created **/
     virtual void StartPlay() override;
 
@@ -103,7 +107,6 @@ public:
     /** Handle for delegate for UI **/
     void OnTargetKilledHandle(const AActor* Victim);
 
-    /** Delegates **/
-    FOnTargetKilled OnTargetKilled;
-    FOnWaveFinished OnWaveFinished;
+    /** Get the waves score from GameMode **/
+    FORCEINLINE int32 GetWavesScore() const {return WavesCount;}
 };

@@ -5,6 +5,7 @@
 
 #include "DrawDebugHelpers.h"
 #include "NavigationSystem.h"
+#include "SPlayerState.h"
 #include "STargetSphere.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -17,11 +18,13 @@ ASGameMode::ASGameMode()
     NeedKillToFinish = 10;
     TargetsDistance = 80;
     SpawnHeight = 100.f;
+    
     // The wave's properties
     InitialSpawnRadius = 2000;
     KillsCountingRadius = 1500;
-    DelayBetweenWaves = 5.f;
+    DelayBetweenWaves = 2.f;
     WavesCount = 1;
+    
     // The multiplier properties
     TargetsQuantityMulti = 10;
     RadiusMulti = 5;
@@ -126,8 +129,6 @@ void ASGameMode::PrepareForWave()
     InitialSpawnRadius = InitialSpawnRadius * RadiusMulti / 100 + InitialSpawnRadius;
     // Refresh the Max Target's size
     MaxTargetSize = MinTargetSize;
-    // Counts the waves
-    ++WavesCount;
 
     // Starts the timer for new wave
     FTimerHandle TimerHandle_StartNewWave;
@@ -142,12 +143,14 @@ void ASGameMode::FinishWave()
     {
         for(const auto Instance : TargetInstances)
         {
-            Instance->Destroy();
+            if(IsValid(Instance)) Instance->Destroy();
         }
     }
 
     // Clean the Target's Array
     TargetInstances.Empty();
+    // Increase score of the waves
+    ++WavesCount;
     // Called wave finished delegate
     OnWaveFinished.Broadcast();
     // Preparing the game mode for new wave

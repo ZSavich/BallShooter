@@ -25,6 +25,10 @@ protected:
     /** Muzzle socket in the Weapon Instance **/
     UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Weapon")
     FName MuzzleSocketName;
+
+    /** Particle Effect for Shooting **/
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Weapon")
+    UParticleSystem* MuzzleEffect;
     
 public:	
 	/** Sets default properties for Weapon **/
